@@ -4,7 +4,7 @@ env:
   variables:
     AWS_ACCOUNT_ID: "553022076715"
     REGION: "us-east-1"
-    REPO_NAME: "dev/midtrack"
+    REPO_NAME: "dev/mindtrack"
     IMAGE_TAG: "latest"
 
 phases:
