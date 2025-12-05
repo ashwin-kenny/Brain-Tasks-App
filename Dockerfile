@@ -1,5 +1,6 @@
 # Use official NGINX image
 FROM nginx:alpine
+MAINTAINER ashwinkennyak257@gmail.com
 
 # Remove default nginx static content
 RUN rm -rf /usr/share/nginx/html/*
