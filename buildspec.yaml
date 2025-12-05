@@ -27,17 +27,15 @@ phases:
         aws ecr create-repository --repository-name $REPO_NAME --region $REGION
       - echo Updating kubeconfig for EKS cluster...
       - aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
-  docker_build:
+  build:
     commands:
       - echo Building the Docker image...
       - docker build -t $REPO_NAME .
       - docker tag $REPO_NAME:latest $AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$REPO_NAME:$IMAGE_TAG
-  push_docker_image:
-    commands:
       - echo Pushing the Docker image...
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$REPO_NAME:$IMAGE_TAG
       - echo Build completed on `date`
-  deploy_to_eks_dev:
+  post_build:
     commands:
       - echo Deploying to $CLUSTER_NAME
       - kubectl create namespace dev --dry-run=client -o yaml | kubectl apply -f -
