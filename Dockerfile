@@ -1,5 +1,5 @@
 # Use official NGINX image
-FROM nginx:alpine
+FROM  public.ecr.aws/nginx/nginx:1.27
 MAINTAINER ashwinkennyak257@gmail.com
 
 # Remove default nginx static content
