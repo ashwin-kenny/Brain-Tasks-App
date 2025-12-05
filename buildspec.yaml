@@ -1,0 +1,33 @@
+version: 0.2
+
+env:
+  variables:
+    AWS_ACCOUNT_ID: "553022076715"
+    REGION: "us-east-1"
+    REPO_NAME: "dev/midtrack"
+    IMAGE_TAG: "latest"
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com
+      - echo Checking if repository exists...
+      - |
+        aws ecr describe-repositories --repository-names $REPO_NAME --region $REGION || \
+        aws ecr create-repository --repository-name $REPO_NAME --region $REGION
+  build:
+    commands:
+      - echo Building the Docker image...
+      - docker build -t $REPO_NAME .
+      - docker tag $REPO_NAME:latest $AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$REPO_NAME:$IMAGE_TAG
+  post_build:
+    commands:
+      - echo Pushing the Docker image...
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$REPO_NAME:$IMAGE_TAG
+      - echo Build completed on `date`
+
+artifacts:
+  files:
+    - '**/*'
