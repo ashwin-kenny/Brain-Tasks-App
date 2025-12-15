@@ -35,8 +35,7 @@ phases:
       - |
         aws ecr describe-repositories --repository-names $REPO_NAME --region $REGION || \
         aws ecr create-repository --repository-name $REPO_NAME --region $REGION
-      - echo Updating kubeconfig for EKS cluster...
-      - aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
+
   build:
     commands:
       - echo Building the Docker image...
@@ -49,6 +48,8 @@ phases:
     commands:
       - echo Deploying to $CLUSTER_NAME
       - |
+      - echo Updating kubeconfig for EKS cluster...
+      - aws eks update-kubeconfig --region $REGION --name $CLUSTER_NAME
         NAMESPACE="dev"
 
         if kubectl get namespace "$NAMESPACE" >/dev/null 2>&1; then
