@@ -38,7 +38,7 @@ phases:
   post_build:
     commands:
       - echo Deploying to $CLUSTER_NAME
-      - kubectl create namespace dev --dry-run=client -o yaml | kubectl apply -f -
+      - kubectl get namespace dev || kubectl create namespace dev
       - kubectl apply -f k8s/deployment.yaml -n dev
       - kubectl apply -f k8s/service.yaml -n dev
 
