@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: brain-tasks-app
-          image: 553022076715.dkr.ecr.us-east-1.amazonaws.com/dev/mindtrack:latest
+          image: 225398952196.dkr.ecr.us-east-1.amazonaws.com/dev/mindtrack:latest
           ports:
             - containerPort: 80
       imagePullSecrets:
