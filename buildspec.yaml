@@ -48,6 +48,24 @@ phases:
   post_build:
     commands:
       - echo Deploying to $CLUSTER_NAME
+      - |
+        NAMESPACE="dev"
+
+        if kubectl get namespace "$NAMESPACE" >/dev/null 2>&1; then
+          echo "Namespace '$NAMESPACE' already exists."
+        else
+          echo "Namespace '$NAMESPACE' not found. Creating it now..."
+          kubectl create namespace "$NAMESPACE"
+          echo "Namespace '$NAMESPACE' created."
+        fi
+
+        if kubectl get secret "ecr-creds" -n $NAMESPACE >/dev/null 2>&1; then
+          echo "Secret ecr-creds already exists"
+        else
+          echo "Secret ecr-creds not found. Creating it now.."
+          kubectl create secret docker-registry ecr-creds --docker-server=2253989521965.dkr.ecr.us-east-1.amazonaws.com --docker-username=AWS --docker-password="$(aws ecr get-login-password --region us-east-1)" -n dev
+          echo "Secret ecr-creds created"
+        fi
       - kubectl apply -f k8s/deployment.yaml -n dev
       - kubectl apply -f k8s/service.yaml -n dev
 
