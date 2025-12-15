@@ -1,4 +1,4 @@
-# React JS Nginx Image Deployed in EKS CLuster / CICD JENKINS / Terraform EC2, VPC, IAM
+# React JS Nginx Image Deployed in EKS CLuster / CICD Codebuild/ AWS ECR
 
 * This project contains the executable code of React JS deployed in EKS cluster.
 * CICD using AWS Codebuild..
