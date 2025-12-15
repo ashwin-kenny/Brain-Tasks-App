@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    AWS_ACCOUNT_ID: "553022076715"
+    AWS_ACCOUNT_ID: "225398952196"
     REGION: "us-east-1"
     REPO_NAME: "dev/mindtrack"
     IMAGE_TAG: "latest"
